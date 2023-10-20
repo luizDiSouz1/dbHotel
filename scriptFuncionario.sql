@@ -78,3 +78,45 @@ select * from funcionarios;
 
 /*Buscar o login e a senha da tabela funcionarios em que login seja admin e senha seja admin*/
 select login as login, senha from funcionarios where login = "admin" and senha = md5("admin");
+
+/*Delete*/
+delete from funcionarios where  idFunc = 6;
+
+/*Buscar o ID e o nome do funcionario ordenando o nome alfabeticamente (descendente, de A a Z)*/
+select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario from funcionarios order by nomeFunc desc;
+
+select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios order by nomeFunc desc;
+
+
+select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios where cargo <> "null" order by idFunc desc;
+
+
+insert into funcionarios(nomeFunc, login,email, senha, cargo)values("Jose","joseloretto","zeze@senac.com.br",md5("123@senac"),"Gerencia");
+
+insert into funcionarios(nomeFunc, login,email, senha, cargo)values("luciano","lulu","luciano@senac.com.br",md5("123@senac"),"Gerencia");
+
+insert into funcionarios(nomeFunc, login,email, senha, cargo)values("luciano","lulu","luciano@senac.com.br",md5("123@senac"),"Gerencia");
+
+insert into funcionarios(nomeFunc, login,email, senha, cargo)values("Matheus","teteu","matheus@senac.com.br",md5("123@senac"),"Gerencia");
+
+select * from funcionarios;
+
+select * from funcionarios where cargo = "gerencia" order by idFunc desc;
+
+create table quartos (
+	idQuarto int primary key auto_increment,
+    andar varchar(10) not null,
+    tipoQuarto varchar(50) not null,
+    ocupacaoMax int not null,
+    situacao char(3) not null,
+    nome varchar(50) not null,
+    descricao text,
+    preco decimal(10,2) not null,
+    tipoCama varchar(20),
+    varanda char(3)
+);
+
+alter table quartos add column numeroQuarto varchar(10) not null after andar;
+
+
+
