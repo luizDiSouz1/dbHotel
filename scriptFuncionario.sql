@@ -84,10 +84,7 @@ delete from funcionarios where  idFunc = 6;
 
 /*Buscar o ID e o nome do funcionario ordenando o nome alfabeticamente (descendente, de A a Z)*/
 select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario from funcionarios order by nomeFunc desc;
-
 select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios order by nomeFunc desc;
-
-
 select idFunc as ID_funcionarios, nomeFunc as Nome_Funcionario, cargo as Cargo_Funcionario from funcionarios where cargo <> "null" order by idFunc desc;
 
 
@@ -117,6 +114,47 @@ create table quartos (
 );
 
 alter table quartos add column numeroQuarto varchar(10) not null after andar;
+alter table quartos add column cafeDaManha char(10) not null after preco;
+alter table quartos add column foto varchar(255) not null after descricao;
+
+select * from quartos;
+
+
+describe quartos;
+
+insert into quartos(andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda)value("5°","505","superior Premier",3,"não","Familiar","Excelente hotel, em meio a muita vegetação",750.50,"Queen size","sim");
+insert into quartos(andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda)value("9°","905","superior Premier Twin",9,"sim","single","Excelente hotel, em meio a muita vegetação e mulheres",700.50,"King size","não");
+insert into quartos(andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, preco, tipoCama, varanda)value("10°","1005","superior Twin",10,"sim","single","Excelente hotel, em meio a muita vegetação e mulheres brancas",1000.50,"King size","não");
+insert into quartos(andar, numeroQuarto, tipoQuarto, ocupacaoMax, situacao, nome, descricao, foto, cafeDaManha, preco, tipoCama, varanda)value("11°","1105","superior Twin",11,"sim","single","Excelente hotel, em meio a muita vegetação e mulheres brancas"," https://imgb.ifunny.co/images/8de995299506f0da6e55…2c29f4f4633f70a61661a282b7954fb62ac6229f47_1.webp","sim",400.50,"King size","sim");
+
+update quartos set cafeDaManha = "sim" where idQuarto = 1;
+update quartos set cafeDaManha = "sim" where idQuarto = 2;
+update quartos set cafeDaManha = "sim" where idQuarto = 3;
+
+update quartos set situacao = "sim" where idQuarto = 1;
+update quartos set cafeDaManha = "sim" where idQuarto = 1;
+
+update quartos set foto = "https://imgb.ifunny.co/images/8de995299506f0da6e55…2c29f4f4633f70a61661a282b7954fb62ac6229f47_1.webp" where idQuarto = 1;
+update quartos set foto = "https://imgb.ifunny.co/images/8de995299506f0da6e55…2c29f4f4633f70a61661a282b7954fb62ac6229f47_1.webp" where idQuarto = 2;
+update quartos set foto = "https://imgb.ifunny.co/images/8de995299506f0da6e55…2c29f4f4633f70a61661a282b7954fb62ac6229f47_1.webp" where idQuarto = 3;
+update quartos set foto = "https://imgb.ifunny.co/images/8de995299506f0da6e55…2c29f4f4633f70a61661a282b7954fb62ac6229f47_1.webp" where idQuarto = ;
+
+select * from quartos;
+/*_____________________________________________________________________________________________________________*/
+
+/*primeiro exercicio (quarto disponivel)*/
+select idQuarto as ID_Quarto, andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel from quartos where situacao <> "não" order by tipoQuarto desc;
+
+/*Segundo exercicio(café da manhã, diponivel)*/
+select idQuarto as ID_Quarto, andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé from quartos where situacao <> "não" and cafeDaManha <> "não" order by tipoQuarto desc;
+
+/*Terceiro exercicio(varanda,café da manha e disponivel)*/
+select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha from quartos where situacao <> "não" and cafeDaManha <> "não" and varanda <> "não" order by tipoQuarto desc;
+
+/*Quarto exercicio(abaixo de 700, disponivel)*/
+select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha, preco as vaiPagarQuanto from quartos where situacao <> "não" and preco < 700;
 
 
 
+
+ 
