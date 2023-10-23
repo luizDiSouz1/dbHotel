@@ -146,14 +146,31 @@ select * from quartos;
 select idQuarto as ID_Quarto, andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel from quartos where situacao <> "não" order by tipoQuarto desc;
 
 /*Segundo exercicio(café da manhã, diponivel)*/
-select idQuarto as ID_Quarto, andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé from quartos where situacao <> "não" and cafeDaManha <> "não" order by tipoQuarto desc;
+select idQuarto as ID_Quarto, andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé from quartos where situacao <> "não" and cafeDaManha <> "não" order by tipoQuarto asc;
 
 /*Terceiro exercicio(varanda,café da manha e disponivel)*/
-select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha from quartos where situacao <> "não" and cafeDaManha <> "não" and varanda <> "não" order by tipoQuarto desc;
+select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha from quartos where situacao <> "não" and cafeDaManha <> "não" and varanda <> "não" order by tipoQuarto asc;
 
 /*Quarto exercicio(abaixo de 700, disponivel)*/
 select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha, preco as vaiPagarQuanto from quartos where situacao <> "não" and preco < 700;
 
+create table clientes(
+	idCliente int primary key auto_increment,
+    nomeCompleto varchar (200) not null,
+    cpf char(14) not null unique,
+    rg char(12) not null unique,
+    email varchar(50) unique,
+    numeroCartao varchar(20),
+	nomeTitular varchar(100) not null,
+    validade date not null,
+    cvv char(3) not null,
+    checkin datetime not null,
+    checkout datetime not null,
+    idQuarto int not null,
+    foreign key(idQuarto) references quartos(idQuarto)
+);
+
+describe clientes;
 
 
 
