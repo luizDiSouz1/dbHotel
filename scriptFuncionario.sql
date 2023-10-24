@@ -170,7 +170,41 @@ create table clientes(
     foreign key(idQuarto) references quartos(idQuarto)
 );
 
+
+
+alter table clientes add column celular varchar(30) after email;
+
 describe clientes;
+
+select * from quartos where situacao = "não";
+
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values 
+("José de Assis","829.942.570-09","45.353.222-8","josedeassis@gmail.com","(96)99338-2803","5526 4863 8286 2543", "José de Assis","2025-02-22","452",
+"2023-11-02 14:00:00","2023-11-05 12:00:00", 1);
+
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values 
+("Adriana Calcanhoto","452.552.655-08","48.353.888-8","adrianacalcanhoto@gmail.com","(96)98345-2807","5256 4683 8826 2453", "Adriana Calcanhoto","2025-03-25","532",
+"2023-11-07 15:00:00","2023-12-07 17:00:00", 2);
+
+select * from clientes;
+
+update quartos set situacao = "não" where idQuarto = 1;
+update quartos set situacao = "não" where idQuarto = 2;
+
+select * from clientes;
+
+/*Buscar o nome do completo e o celular do cliente que alugou o quarto de número 505, pois a tabela quartos está vinculado a tabela clientes pelo campo idQuarto*/
+select clientes.nomeCompleto, clientes.celular from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
+
+/*Buscar o nome completo e data/horario do checkout do cliente que alugou o quanto do numero 505*/
+select clientes.nomeCompleto, clientes.checkout from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
+
+/*Buscar o nome completo e data/hora do checkout do cliente que alugou o quarto de numero 505 */
+select clientes.nomeCompleto as Nome, date_format(clientes.checkout,'%d/%m/%Y - %H:%i') as checkout from quartos inner join clientes on quartos.idQuarto - clientes.idQuarto where numeroQuarto = 505;
+
+
+
+
 
 
 
