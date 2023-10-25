@@ -154,6 +154,8 @@ select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_qua
 /*Quarto exercicio(abaixo de 700, disponivel)*/
 select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha, preco as vaiPagarQuanto from quartos where situacao <> "não" and preco < 700;
 
+
+/*tabela alterada, elimando a relação dos quartos 25.10*/
 create table clientes(
 	idCliente int primary key auto_increment,
     nomeCompleto varchar (200) not null,
@@ -165,9 +167,7 @@ create table clientes(
     validade date not null,
     cvv char(3) not null,
     checkin datetime not null,
-    checkout datetime not null,
-    idQuarto int not null,
-    foreign key(idQuarto) references quartos(idQuarto)
+    checkout datetime not null
 );
 
 
@@ -178,13 +178,13 @@ describe clientes;
 
 select * from quartos where situacao = "não";
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values 
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values 
 ("José de Assis","829.942.570-09","45.353.222-8","josedeassis@gmail.com","(96)99338-2803","5526 4863 8286 2543", "José de Assis","2025-02-22","452",
-"2023-11-02 14:00:00","2023-11-05 12:00:00", 1);
+"2023-11-02 14:00:00","2023-11-05 12:00:00");
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout, idQuarto) values 
+insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values 
 ("Adriana Calcanhoto","452.552.655-08","48.353.888-8","adrianacalcanhoto@gmail.com","(96)98345-2807","5256 4683 8826 2453", "Adriana Calcanhoto","2025-03-25","532",
-"2023-11-07 15:00:00","2023-12-07 17:00:00", 2);
+"2023-11-07 15:00:00","2023-12-07 17:00:00");
 
 select * from clientes;
 
@@ -192,6 +192,7 @@ update quartos set situacao = "não" where idQuarto = 1;
 update quartos set situacao = "não" where idQuarto = 2;
 
 select * from clientes;
+
 
 /*Buscar o nome do completo e o celular do cliente que alugou o quarto de número 505, pois a tabela quartos está vinculado a tabela clientes pelo campo idQuarto*/
 select clientes.nomeCompleto, clientes.celular from quartos inner join clientes on quartos.idQuarto = clientes.idQuarto where numeroQuarto = 505;
@@ -202,6 +203,40 @@ select clientes.nomeCompleto, clientes.checkout from quartos inner join clientes
 /*Buscar o nome completo e data/hora do checkout do cliente que alugou o quarto de numero 505 */
 select clientes.nomeCompleto as Nome, date_format(clientes.checkout,'%d/%m/%Y - %H:%i') as checkout from quartos inner join clientes on quartos.idQuarto - clientes.idQuarto where numeroQuarto = 505;
 
+use dbHotel;
+
+drop table clientes;
+
+describe clientes;
+
+/*dataPedido timestamp default current_timestamp significa que a data do pedido será a mesma do sistema, ou seja, a data atual
+statusPedido significa que a situação do pedido será uma das seguintes opções: pendendte finalizado*/
+
+create table pedido(
+	idPedido int primary key auto_increment,
+    dataPedido timestamp default current_timestamp,
+    statusPedido enum("Pendente","Finalizado","Cancelado")not null,
+    idCliente int not null,
+    foreign key(idCliente) references clientes(idCliente)
+); 
+
+/*abertura de pedidos*/
+
+insert into pedido (statusPedido, idCliente) values ("Pendente",1);
+insert into pedido (statusPedido, idCliente) values ("Pendente",2);
+
+select * from pedido;
+
+
+describe pedido;
+
+create table reservas (
+	idReserva int primary key auto_increment,
+	idPedido int not null,
+    idQuarto int not null,
+    foreign key (idPedido) references pedido(idPedido),
+    foreign key (idQuarto) references quartos(idQuarto)
+);
 
 
 
