@@ -155,7 +155,7 @@ select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_qua
 select andar as andar_quarto, tipoQuarto as tipo_Quarto, nome as descrição_quartos, situacao as esta_disponivel, cafeDaManha as mãeTemCafé, varanda as tem_varandinha, preco as vaiPagarQuanto from quartos where situacao <> "não" and preco < 700;
 
 
-/*tabela alterada, elimando a relação dos quartos 25.10*/
+/*tabela alterada, elimando a relação dos quartos 25.10
 create table clientes(
 	idCliente int primary key auto_increment,
     nomeCompleto varchar (200) not null,
@@ -168,7 +168,7 @@ create table clientes(
     cvv char(3) not null,
     checkin datetime not null,
     checkout datetime not null
-);
+); */
 
 
 
@@ -178,15 +178,9 @@ describe clientes;
 
 select * from quartos where situacao = "não";
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values 
-("José de Assis","829.942.570-09","45.353.222-8","josedeassis@gmail.com","(96)99338-2803","5526 4863 8286 2543", "José de Assis","2025-02-22","452",
-"2023-11-02 14:00:00","2023-11-05 12:00:00");
+insert into clientes (nomeCompleto, cpf, rg, email, celular) values ("José de Assis","829.942.570-09","45.353.222-8","josedeassis@gmail.com","(96)99338-2803");
 
-insert into clientes (nomeCompleto, cpf, rg, email, celular, numeroCartao, nomeTitular, validade, cvv, checkin, checkout) values 
-("Adriana Calcanhoto","452.552.655-08","48.353.888-8","adrianacalcanhoto@gmail.com","(96)98345-2807","5256 4683 8826 2453", "Adriana Calcanhoto","2025-03-25","532",
-"2023-11-07 15:00:00","2023-12-07 17:00:00");
-
-select * from clientes;
+insert into clientes (nomeCompleto, cpf, rg, email, celular) values ("Adriana Calcanhoto","452.552.655-08","48.353.888-8","adrianacalcanhoto@gmail.com","(96)98345-2807");
 
 update quartos set situacao = "não" where idQuarto = 1;
 update quartos set situacao = "não" where idQuarto = 2;
@@ -226,7 +220,7 @@ insert into pedido (statusPedido, idCliente) values ("Pendente",1);
 insert into pedido (statusPedido, idCliente) values ("Pendente",2);
 
 select * from pedido;
-
+select * from pedido inner join clientes on pedido.idCliente = clientes.idCliente;
 
 describe pedido;
 
@@ -238,7 +232,24 @@ create table reservas (
     foreign key (idQuarto) references quartos(idQuarto)
 );
 
+select * from clientes;
 
+select * from reservas;
+
+insert into reservas (idPedido,idQuarto,checkin, checkout) values (1,1,"2023-11-02 14:00:00","2023-11-05 12:00:00");
+insert into reservas (idPedido,idQuarto,checkin, checkout) values (1,2,"2023-11-02 14:00:00","2023-11-05 12:00:00");
+
+select * from reservas;
+
+alter table reservas add column checkin datetime not null;
+alter table reservas add column checkout datetime not null;
+
+select * from reservas;
+
+select reservas.idReserva, pedido.idPedido, 
+quartos.idQuarto, quartos.nome, quartos.andar, quartos.numeroQuarto
+from (reservas inner join pedido on reservas.idPedido = pedido.idPedido)
+inner join quartos on reservas.idQuarto = quartos.idQuarto; 
 
 
 
