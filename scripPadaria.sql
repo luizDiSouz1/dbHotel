@@ -86,4 +86,23 @@ insert into itensPedidos (idPedido, idProduto, quantidade) values (1, 1, 2);
 
 insert into itensPedidos (idPedido, idProduto, quantidade) values (1, 2, 1);
 
-select itensPedidos.idItensPedidos, pedidos.idPedido, produtos.idProduto, clientes.nomeCliente;
+select * from pedidos inner join clientes on pedidos.idCliente = clientes.idCliente;
+select * from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido;
+select * from itensPedidos inner join produtos on itensPedidos.idProduto = produtos.idProduto;
+
+
+
+/* OBJETIVO: consultar o nome do cliente que abriu seu pedido em determinada data para verificar o que ele comprou de itens nesse pedido e a respectiva quantidade,
+ou seja, quais produtos e quanto de cada um 
+QUEM COMPROU? QUANDO COMPROU? O QUE COMPROU? QUANTO COMPROU? */
+
+select clientes.nomeCliente, pedidos.idPedido, pedidos.dataPedido, itensPedidos.quantidade, produtos.nomeProduto, produtos.precoProduto
+from clientes inner join pedidos on clientes.idCliente = pedidos.idCliente inner join
+itensPedidos on pedidos.idPedido = itensPedidos.idPedido inner join
+produtos on produtos.idProduto = itensPedidos.idProduto;
+
+/* 
+pedidos.datapedido = nome da tabela.oquesequerdela
+
+
+*/
