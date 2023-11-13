@@ -97,8 +97,7 @@ ou seja, quais produtos e quanto de cada um
 QUEM COMPROU? QUANDO COMPROU? O QUE COMPROU? QUANTO COMPROU? */
 
 select clientes.nomeCliente, pedidos.idPedido, pedidos.dataPedido, itensPedidos.quantidade, produtos.nomeProduto, produtos.precoProduto
-from clientes inner join pedidos on clientes.idCliente = pedidos.idCliente inner join
-itensPedidos on pedidos.idPedido = itensPedidos.idPedido inner join
+from clientes inner join pedidos on clientes.idCliente = pedidos.idCliente inner join itensPedidos on pedidos.idPedido = itensPedidos.idPedido inner join
 produtos on produtos.idProduto = itensPedidos.idProduto;
 
 /* 
@@ -106,3 +105,27 @@ pedidos.datapedido = nome da tabela.oquesequerdela
 
 
 */
+
+alter table produtos ADD column validadeProduto datetime;
+alter table produtos add column pesoProduto decimal (10,2);
+alter table produtos add column ingredientesProdutos text;
+
+select * from produtos;
+
+update produtos set ingredientesProdutos = "Massa de tapioca, ovo" where idProduto = 1;
+
+update produtos set validadeProduto = "2023-11-14" where idProduto = 1;
+update produtos set pesoProduto = 0.500 where idProduto = 1;
+
+
+insert into produtos(nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor,validadeProduto,pesoProduto,ingredientesProdutos) values 
+("Pastel", "Pastel de carne e queijo", 7.50, 12, "Salgados",1,"2023-11-15",0.500,"Massa de pastel, carne e queijo");
+
+insert into produtos(nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor,validadeProduto,pesoProduto,ingredientesProdutos) values 
+("Bolo", "Bolo", 9.50, 15, "Bolos",1,"2023-11-15",1.500,"Farinha, leite, ovos, creme de leite e chocolate");
+
+select * from produtos;
+
+select sum(quantidade * 23.60 ) as total from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido where pedidos.idPedido = 1;
+
+show tables;
