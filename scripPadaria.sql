@@ -124,8 +124,20 @@ insert into produtos(nomeProduto, descricaoProduto, precoProduto, estoqueProduto
 insert into produtos(nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor,validadeProduto,pesoProduto,ingredientesProdutos) values 
 ("Bolo", "Bolo", 9.50, 15, "Bolos",1,"2023-11-15",1.500,"Farinha, leite, ovos, creme de leite e chocolate");
 
-select * from produtos;
 
-select sum(quantidade * 23.60 ) as total from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido where pedidos.idPedido = 1;
+select sum(produtos.precoProduto * itensPedidos.quantidade) as total from itensPedidos inner join pedidos on itensPedidos.idPedido = pedidos.idPedido where pedidos.idPedido = 1;
 
 show tables;
+
+/*Possiveis FILTROS PARA PADARIA */
+
+/*Filtrar produtos por validade (por exemplo, produtos com validade maior que a data atual, ou seja, produtos que não estão vencidos)*/
+
+select * from produtos where validadeProduto > curdate();
+
+/*filtrar produtos que contenham um ingrediente especifico */
+select * from produtos where ingredientesProduto like "%gluten%";
+
+select * from produtos where ingredientesProdutos like "%ovos%" and precoProduto > 5.50;
+
+
